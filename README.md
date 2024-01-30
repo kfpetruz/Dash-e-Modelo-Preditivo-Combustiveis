@@ -13,9 +13,10 @@
 <h2> :hammer_and_wrench: Tecnologias utilizadas</h2>
 <a href="https://imgbox.com/zPWZoqf8" target="_blank"><img src="https://thumbs2.imgbox.com/7a/64/zPWZoqf8_t.png" alt="image host"/></a>
 <a href="https://imgbox.com/I7ADNVgD" target="_blank"><img src="https://thumbs2.imgbox.com/ee/16/I7ADNVgD_t.png" alt="image host"/></a>
+<a href="https://imgbox.com/UkUGeFZV" target="_blank"><img src="https://thumbs2.imgbox.com/8e/de/UkUGeFZV_t.png" alt="image host"/></a>
 <a href="https://imgbox.com/nRi9wGf8" target="_blank"><img src="https://thumbs2.imgbox.com/1b/24/nRi9wGf8_t.png" alt="image host"/></a>
 <a href="https://imgbox.com/YOjgt7zl" target="_blank"><img src="https://thumbs2.imgbox.com/cb/90/YOjgt7zl_t.png" alt="image host"/></a> 
-<a href="https://imgbox.com/2mF1oLMP" target="_blank"><img src="https://thumbs2.imgbox.com/f9/a1/2mF1oLMP_t.png" alt="image host"/></a>
+<a href="https://imgbox.com/gZaLOYZm" target="_blank"><img src="https://thumbs2.imgbox.com/84/3b/gZaLOYZm_t.png" alt="image host"/></a>
 
 <h2> :books: Bibliotecas Python utilizadas</h2>
 <ul>
