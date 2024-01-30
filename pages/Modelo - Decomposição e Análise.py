@@ -1,7 +1,7 @@
 # Importação das bibliotecas
 import streamlit as st
 from statsmodels.tsa.seasonal import seasonal_decompose
-from utils import leitura_csv,decomposicao,teste_estatistico
+from utils import select_bq,decomposicao,teste_estatistico
 
 # Configuração da página
 st.set_page_config(page_title= 'Modelo - Decomposição e Análise', layout='wide', page_icon= ':fuelpump:')
@@ -20,9 +20,9 @@ st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Saz
 st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Sazonalidade mensal:</span> Variações que ocorrem a cada mês. Muitos fenômenos naturais e comportamentais exibem sazonalidade mensal, como vendas sazonais em certas indústrias, flutuações na demanda por energia elétrica, etc. O período sazonal associado seria 30 dias (em média).</p>', unsafe_allow_html = True)
 st.markdown('<p style="text-align: justify;"><span style="font-weight: bold">Sazonalidade anual:</span> Padrões que se repetem anualmente. Por exemplo, em dados climáticos, podemos observar variações sazonais nas temperaturas ao longo das estações do ano. O período sazonal associado seria 365 dias.</p>', unsafe_allow_html = True)
 
-# Leitura dos dados de petróleo gravados no csv
-arquivo = 'dados_preco_petroleo.csv'
-dados = leitura_csv(arquivo)
+# Leitura dos dados de petróleo gravados no BigQuery
+tabela_bq = 'tb_preco_petroleo'
+dados = select_bq(tabela_bq)
 
 # Agrupamento dos dados em semanal, mensal e diário
 df_semanal = dados.resample('W')['Preco'].mean()

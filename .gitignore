@@ -1,3 +1,4 @@
 tc4/
 __pycache__/
 auxiliar.ipynb
+.streamlit/secrets.toml

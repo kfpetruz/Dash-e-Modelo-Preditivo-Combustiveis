@@ -20,13 +20,15 @@
 <h2> :books: Bibliotecas Python utilizadas</h2>
 <ul>
   <li>Streamlit</li>
+  <li>Google-Cloud-Bigquery</li>
+  <li>Pandas-gbq</li>
    <li>Plotly</li>
    <li>Pandas</li>
+  <li>Numpy</li>
    <li>Lxml</li>
   <li>Statsmodels</li>
   <li>Scikit-learn</li>
     <li>Matplotlib</li>
-  <li>Numpy</li>
 </ul>
 
 <h2>👩‍🎓 Equipe do projeto</h2>

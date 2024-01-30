@@ -2,7 +2,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-from utils import leitura_csv,webscraping,graf_marcado_multiplos
+from utils import webscraping,graf_marcado_multiplos,select_bq
 
 # Configuração da página
 st.set_page_config(page_title= 'Dashboard - Destaques', layout='wide', page_icon= ':fuelpump:')
@@ -15,9 +15,9 @@ url = 'http://www.ipeadata.gov.br/ExibeSerie.aspx?serid=38590&module=M'
 coluna = 'Taxa'
 dados_taxa = webscraping(url,coluna)
 
-# Leitura dos dados de petróleo gravados no csv
-arquivo = 'dados_preco_petroleo.csv'
-dados_preco = leitura_csv(arquivo)
+# Leitura dos dados de petróleo gravados no BigQuery
+tabela_bq = 'tb_preco_petroleo'
+dados_preco = select_bq(tabela_bq)
 
 df_merged = pd.merge(dados_preco, dados_taxa, left_index=True, right_index=True, how='left')
 df_merged.Taxa = df_merged.Taxa/100

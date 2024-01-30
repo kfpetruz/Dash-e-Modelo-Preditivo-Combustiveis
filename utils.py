@@ -10,10 +10,13 @@ import numpy as np
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 import matplotlib.pyplot as plt
 from statsmodels.tsa.stattools import adfuller
+from google.oauth2 import service_account
+from google.cloud import bigquery
+from pandas_gbq import to_gbq
 
 # Armazenamento dos dados em cache, melhorando a performance do site
 @st.cache_data 
-# Leitura do dados no site e armazenamento em um csv
+# Leitura do dados no site e armazenamento no banco de dados no BigQuery
 def webscraping(url,coluna): # a aplicação faz leitura de dois sites, fazendo necessário a identificação da URL e como será chamada a coluna de valores
     dados = pd.read_html(url, encoding='utf-8', decimal=',')
     dados = dados[2]
@@ -25,20 +28,46 @@ def webscraping(url,coluna): # a aplicação faz leitura de dois sites, fazendo 
     dados[dados.columns[1]]= dados[dados.columns[1]]/100
     dados.set_index('Data', inplace = True)
     dados.sort_index(ascending=True, inplace=True)
+    insert_dados = dados.reset_index()
+    insert_dados['Data'] =  pd.to_datetime(insert_dados['Data']).dt.strftime('%d/%m/%Y')
+    projeto = 'sixth-aloe-402921'
+    dataset = 'dados_preco_petroleo'
+    parametro =  'replace'
+    credentials = service_account.Credentials.from_service_account_info(
+        st.secrets["gcp_service_account"]
+    )
     if coluna == 'Preco':
-        dados.to_csv('dados_preco_petroleo.csv', encoding="utf-8")
+        tabela = 'tb_preco_petroleo'
+        insert_dados.to_gbq(destination_table= f'{projeto}.{dataset}.{tabela}',
+                    project_id = projeto,
+                    if_exists = parametro,
+                    credentials = credentials)
     else:
-        dados.to_csv('dados_taxa_cambio.csv', encoding="utf-8")
+        tabela = 'tb_taxa_cambio'
+        insert_dados.to_gbq(destination_table= f'{projeto}.{dataset}.{tabela}',
+                    project_id = projeto,
+                    if_exists = parametro,
+                    credentials = credentials)
     return dados
 
-# Leitura do arquivo csv
-def leitura_csv(arquivo):
-    dados = pd.read_csv(arquivo, encoding='utf-8')
-    dados['Data'] = pd.to_datetime(dados['Data'], format = '%Y-%m-%d')
-    dados[dados.columns[1]] = dados[dados.columns[1]].astype(float)
-    dados.set_index('Data', inplace = True)
-    dados.sort_index(ascending=True, inplace=True)
-    return dados
+# Armazenamento dos dados em cache
+@st.cache_data 
+# Consulta full de cada tabela criada no BigQuery
+def select_bq (tabela):
+    credentials = service_account.Credentials.from_service_account_info(
+        st.secrets["gcp_service_account"]
+    )
+    client = bigquery.Client(credentials=credentials)
+
+    query = f'select * from `sixth-aloe-402921.dados_preco_petroleo.{tabela}`'
+
+    resultado = client.query(query)
+    df_resultado = resultado.to_dataframe()
+
+    df_resultado['Data'] = pd.to_datetime(df_resultado['Data'], format = '%d/%m/%Y')
+    df_resultado.set_index('Data', inplace = True)
+    df_resultado.sort_index(ascending=True, inplace=True)
+    return df_resultado
 
 # Os dados do site de petróleo não são atualizados todos os dias, mas como a aplicação está armazenando os dados em cache, quando estiverem desatualizados, se faz necessário clicar 
 def atualiza_dados():

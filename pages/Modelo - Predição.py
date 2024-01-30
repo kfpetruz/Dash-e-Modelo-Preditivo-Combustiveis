@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 import pickle
-from utils import leitura_csv,modelo_ets_perfomance,dias_uteis_futuros,modelo_ets_previsao
+from utils import select_bq,modelo_ets_perfomance,dias_uteis_futuros,modelo_ets_previsao
 
 # Configuração da página
 st.set_page_config(page_title= 'Modelo - Predição', layout='wide', page_icon= ':fuelpump:')
@@ -30,9 +30,9 @@ st.header('Performance do Modelo')
 st.markdown('<p style="text-align: justify;">Para a divisão dos dados em treinamento e teste foi utilizado o <span style="font-weight: bold">TimeSeriesSplit</span>, uma técnica de validação cruzada especializada para séries temporais. O TimeSeriesSplit divide os dados em conjuntos de treinamento e teste mantendo a ordem temporal. Ao avaliar o modelo em múltiplas divisões temporais, você obtém uma estimativa mais robusta do desempenho médio do modelo ao longo do tempo. Isso pode ajudar a reduzir o viés de avaliação e fornecer uma avaliação mais confiável do modelo.</p>', unsafe_allow_html = True) 
 st.markdown('Além disso, é possível comparar as diferentes combinações de parâmetros do modelo e avaliar seu desempenho em termos de <span style="font-weight: bold">Erro Médio Absoluto(MAE)</span> ao longo do tempo em diferentes períodos, ajudando a selecionar o resultado mais robusto e generalizável para a série temporal.', unsafe_allow_html = True)
 
-# Leitura dos dados de petróleo gravados no csv
-arquivo = 'dados_preco_petroleo.csv'
-dados = leitura_csv(arquivo)
+# Leitura dos dados de petróleo gravados no BigQuery
+tabela_bq = 'tb_preco_petroleo'
+dados = select_bq(tabela_bq)
 
 # Leitura do arquivo pickle com a função do modelo de previsão
 with open('modelo_ets.pkl', 'rb') as arquivo:
