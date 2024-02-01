@@ -11,7 +11,7 @@
 </ul>
 
 <h2> :computer: Link da aplicação</h2>
-📊 <a href= "https://dash-e-modelo-preditivo-preco-petroleo.streamlit.app">STREAMLIT</a>
+📊 <a href= "https://dash-e-modelo-preditivo-combustiveis.streamlit.app/">STREAMLIT</a>
 
 <h2> :hammer_and_wrench: Tecnologias utilizadas</h2>
 <a href="https://imgbox.com/zPWZoqf8" target="_blank"><img src="https://thumbs2.imgbox.com/7a/64/zPWZoqf8_t.png" alt="image host"/></a>
